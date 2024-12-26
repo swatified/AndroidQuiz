@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_landscape"
+    android:scaleType="fitStart"
     tools:context=".MainActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="150sp"
         android:layout_height="150sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40sp"
+        android:layout_marginTop="60sp"
         android:id="@+id/profileImage"
         app:shapeAppearanceOverlay="@style/roundedImageView"/>
 
@@ -19,13 +21,18 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/profileImage"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:layout_marginTop="10sp"
+        android:textSize="27sp"
         android:id="@+id/nameTV"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:layout_below="@id/nameTV"
         android:layout_marginTop="10sp"
         android:id="@+id/mailTV"/>
@@ -39,18 +46,20 @@
         android:id="@+id/signIn"/>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        style="@style/lessRoundedButton"
         android:layout_below="@id/signIn"
         android:id="@+id/signout"
         android:text="Sign Out"
         android:layout_marginTop="10sp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        style="@style/lessRoundedButton"
         android:layout_below="@id/signout"
         android:id="@+id/startQuiz"
         android:text="Start Quiz"
@@ -60,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:layout_below="@id/startQuiz"
         android:id="@+id/reindeer"
         app:lottie_autoPlay="true"
