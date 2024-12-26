@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation("com.google.firebase:firebase-database:20.3.0")

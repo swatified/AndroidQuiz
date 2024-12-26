@@ -40,25 +40,12 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
     public void onBindViewHolder(@NonNull ScoreViewHolder holder, int position) {
         ScoreModel score = scores.get(position);
 
-        // Set rank position (1-based)
         holder.rankTextView.setText(String.format("#%d", position + 1));
+        holder.userEmailTextView.setText(score.getDisplayName());
+        holder.scoreTextView.setText(String.format("%d/10", score.getScore()));
+        holder.timeTextView.setText(String.format("%02d:%02d", score.getTimeInSeconds() / 60, score.getTimeInSeconds() % 60));
 
-        // Set user email (show only first part before @)
-        String email = score.getUserEmail();
-        String displayName = email.substring(0, email.indexOf('@'));
-        holder.userEmailTextView.setText(displayName);
-
-        // Set score
-        holder.scoreTextView.setText(String.format("Score: %d/10", score.getScore()));
-
-        // Format time as MM:SS
-        long minutes = score.getTimeInSeconds() / 60;
-        long seconds = score.getTimeInSeconds() % 60;
-        holder.timeTextView.setText(String.format("%02d:%02d", minutes, seconds));
-
-        // Highlight current user's score
-        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        if(score.getUserEmail().equals(currentUserEmail)) {
+        if(score.getUserId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.highlight_color));
         } else {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);

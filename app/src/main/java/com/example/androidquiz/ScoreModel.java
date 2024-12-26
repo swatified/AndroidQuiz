@@ -8,15 +8,17 @@ public class ScoreModel {
     private int score;
     private long timeInSeconds;
     private Date timestamp;
+    private String displayName;
 
     public ScoreModel() {}
 
-    public ScoreModel(String userId, String userEmail, int score, long timeInSeconds, Date timestamp) {
+    public ScoreModel(String userId, String userEmail, String displayName, int score, long timeInSeconds, Date timestamp) {
         this.userId = userId;
         this.userEmail = userEmail;
         this.score = score;
         this.timeInSeconds = timeInSeconds;
         this.timestamp = timestamp;
+        this.displayName = displayName;
     }
 
     // Getters
@@ -59,5 +61,14 @@ public class ScoreModel {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    //getter setter for display name
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

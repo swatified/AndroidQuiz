@@ -320,6 +320,11 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        if (currentQuestionIndex >= questions.size()) {
+            finishQuiz();
+            return;
+        }
+
         dialog.show();
     }
 
@@ -365,6 +370,7 @@ public class QuizActivity extends AppCompatActivity {
         scoreData.put("timestamp", new Date());
         scoreData.put("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
         scoreData.put("userEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        scoreData.put("displayName", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
         // Save score to Firestore
         db.collection("quiz_scores")

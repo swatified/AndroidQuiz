@@ -62,7 +62,8 @@ public class ScoreActivity extends AppCompatActivity {
 
     private void loadScores() {
         db.collection("quiz_scores")
-                .orderBy("timeInSeconds", Query.Direction.ASCENDING) // Sort by time
+                .orderBy("score", Query.Direction.DESCENDING)
+                .orderBy("timeInSeconds", Query.Direction.ASCENDING)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
                         Toast.makeText(this, "Error loading scores: " + error.getMessage(),
@@ -76,7 +77,6 @@ public class ScoreActivity extends AppCompatActivity {
                             ScoreModel score = doc.toObject(ScoreModel.class);
                             scoresList.add(score);
                         }
-
                         adapter.setScores(scoresList);
                     }
                 });
