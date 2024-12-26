@@ -12,25 +12,35 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/resultText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textAlignment="center"
-            android:layout_marginBottom="16dp"/>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/incorrectAnimation"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
 
         <TextView
-            android:id="@+id/explanationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Incorrect"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/incorrectExplanationText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginTop="16dp"/>
 
         <Button
-            android:id="@+id/continueButton"
+            android:id="@+id/incorrectContinueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continue"/>
+            android:text="Continue"
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

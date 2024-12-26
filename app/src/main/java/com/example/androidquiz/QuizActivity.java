@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
@@ -29,6 +30,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import android.app.AlertDialog;
+import android.view.LayoutInflater;
 
 
 public class QuizActivity extends AppCompatActivity {
@@ -276,12 +279,6 @@ public class QuizActivity extends AppCompatActivity {
             return;
         }
 
-        // Add this check
-        if (currentQuestionIndex >= questions.size()) {
-            finishQuiz();
-            return;
-        }
-
         int selectedIndex;
         if (selectedId == R.id.option1) selectedIndex = 0;
         else if (selectedId == R.id.option2) selectedIndex = 1;
@@ -289,21 +286,97 @@ public class QuizActivity extends AppCompatActivity {
         else selectedIndex = 3;
 
         Question currentQuestion = questions.get(currentQuestionIndex);
+        boolean isCorrect = selectedIndex == currentQuestion.correctAnswerIndex;
 
-        if (selectedIndex == currentQuestion.correctAnswerIndex) {
+        if (isCorrect) {
+            showCorrectDialog(currentQuestion.explanation);
+        } else {
+            showIncorrectDialog(currentQuestion.explanation);
+        }
+    }
+
+    private void showCorrectDialog(String explanation) {
+        View dialogView = getLayoutInflater().inflate(R.layout.correct_answer_dialog, null);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setCancelable(false)
+                .create();
+
+        TextView explanationText = dialogView.findViewById(R.id.correctExplanationText);
+        Button continueButton = dialogView.findViewById(R.id.correctContinueButton);
+        LottieAnimationView animationView = dialogView.findViewById(R.id.correctAnimation);
+
+        explanationText.setText(explanation);
+        animationView.setAnimation(R.raw.correct_animation);
+
+        continueButton.setOnClickListener(v -> {
+            dialog.dismiss();
             score++;
-            Toast.makeText(this, "Correct! " + currentQuestion.explanation, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Incorrect. " + currentQuestion.explanation, Toast.LENGTH_SHORT).show();
-        }
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= questions.size()) {
+                finishQuiz();
+            } else {
+                loadQuestion();
+            }
+        });
 
-        currentQuestionIndex++;
-        // Move the condition check here
-        if (currentQuestionIndex >= questions.size()) {
-            finishQuiz();
-        } else {
-            loadQuestion();
-        }
+        dialog.show();
+    }
+
+    private void showIncorrectDialog(String explanation) {
+        View dialogView = getLayoutInflater().inflate(R.layout.incorrect_answer_dialog, null);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setCancelable(false)
+                .create();
+
+        TextView explanationText = dialogView.findViewById(R.id.incorrectExplanationText);
+        Button continueButton = dialogView.findViewById(R.id.incorrectContinueButton);
+        LottieAnimationView animationView = dialogView.findViewById(R.id.incorrectAnimation);
+
+        explanationText.setText(explanation);
+        animationView.setAnimation(R.raw.incorrect_animation);
+
+        continueButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= questions.size()) {
+                finishQuiz();
+            } else {
+                loadQuestion();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void showExplanationDialog(boolean isCorrect, String explanation) {
+        View dialogView = getLayoutInflater().inflate(R.layout.explanation_dialog, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        TextView resultText = dialogView.findViewById(R.id.resultText);
+        TextView explanationText = dialogView.findViewById(R.id.explanationText);
+        Button continueButton = dialogView.findViewById(R.id.continueButton);
+
+        resultText.setText(isCorrect ? "Correct!" : "Incorrect");
+        explanationText.setText(explanation);
+
+        continueButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            if (isCorrect) score++;
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= questions.size()) {
+                finishQuiz();
+            } else {
+                loadQuestion();
+            }
+        });
+
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     private void finishQuiz() {
