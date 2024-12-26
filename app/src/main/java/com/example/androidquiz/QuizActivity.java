@@ -276,6 +276,12 @@ public class QuizActivity extends AppCompatActivity {
             return;
         }
 
+        // Add this check
+        if (currentQuestionIndex >= questions.size()) {
+            finishQuiz();
+            return;
+        }
+
         int selectedIndex;
         if (selectedId == R.id.option1) selectedIndex = 0;
         else if (selectedId == R.id.option2) selectedIndex = 1;
@@ -292,7 +298,12 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         currentQuestionIndex++;
-        loadQuestion();
+        // Move the condition check here
+        if (currentQuestionIndex >= questions.size()) {
+            finishQuiz();
+        } else {
+            loadQuestion();
+        }
     }
 
     private void finishQuiz() {
@@ -329,16 +340,17 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showResults() {
-        long totalTime = System.currentTimeMillis() - startTime;
-        long minutes = (totalTime / 1000) / 60;
-        long seconds = (totalTime / 1000) % 60;
+        if (timer != null) {
+            timer.cancel();
+        }
 
-        // Instead of showing results here, redirect to ScoreboardActivity
+        long totalTime = System.currentTimeMillis() - startTime;
         Intent intent = new Intent(QuizActivity.this, ScoreActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("currentScore", score);
         intent.putExtra("totalTime", totalTime);
         startActivity(intent);
-        finish(); // Close QuizActivity
+        finish();
     }
 
     @Override

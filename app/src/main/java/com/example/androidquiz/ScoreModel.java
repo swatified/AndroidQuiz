@@ -9,7 +9,7 @@ public class ScoreModel {
     private long timeInSeconds;
     private Date timestamp;
 
-    public ScoreModel() {} // Required for Firestore
+    public ScoreModel() {}
 
     public ScoreModel(String userId, String userEmail, int score, long timeInSeconds, Date timestamp) {
         this.userId = userId;
@@ -19,8 +19,45 @@ public class ScoreModel {
         this.timestamp = timestamp;
     }
 
-    public Object getTimeInSeconds() {
+    // Getters
+    public String getUserId() {
+        return userId;
     }
 
-    // Add getters and setters
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public long getTimeInSeconds() {
+        return timeInSeconds;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    // Setters
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setTimeInSeconds(long timeInSeconds) {
+        this.timeInSeconds = timeInSeconds;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
 }
