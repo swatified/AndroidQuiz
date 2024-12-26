@@ -2,7 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="main">#042933</color>
     <color name="christmas_red">#C41E3A</color>
     <color name="christmas_green">#348A5A</color>
     <color name="highlight_color">#1A000000</color>
+    <color name="correct_green">#4CAF50</color>
+    <color name="incorrect_red">#F44336</color>
+    <color name="dialog_button">#673AB7</color>
 </resources>

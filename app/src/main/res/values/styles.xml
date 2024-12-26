@@ -11,4 +11,7 @@
         <item name="cornerRadius">8dp</item>
         <item name="backgroundTint">@color/christmas_green</item>
     </style>
+    <style name="DialogButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/dialog_button</item>
+    </style>
 </resources>

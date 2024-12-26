@@ -350,35 +350,6 @@ public class QuizActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void showExplanationDialog(boolean isCorrect, String explanation) {
-        View dialogView = getLayoutInflater().inflate(R.layout.explanation_dialog, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(dialogView);
-        AlertDialog dialog = builder.create();
-
-        TextView resultText = dialogView.findViewById(R.id.resultText);
-        TextView explanationText = dialogView.findViewById(R.id.explanationText);
-        Button continueButton = dialogView.findViewById(R.id.continueButton);
-
-        resultText.setText(isCorrect ? "Correct!" : "Incorrect");
-        explanationText.setText(explanation);
-
-        continueButton.setOnClickListener(v -> {
-            dialog.dismiss();
-            if (isCorrect) score++;
-            currentQuestionIndex++;
-            if (currentQuestionIndex >= questions.size()) {
-                finishQuiz();
-            } else {
-                loadQuestion();
-            }
-        });
-
-        dialog.setCancelable(false);
-        dialog.show();
-    }
-
     private void finishQuiz() {
         if (timer != null) {
             timer.cancel();
