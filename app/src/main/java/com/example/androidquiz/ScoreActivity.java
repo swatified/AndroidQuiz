@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ public class ScoreActivity extends AppCompatActivity {
     private RecyclerView scoresRecyclerView;
     private ScoreAdapter adapter;
     private FirebaseFirestore db;
-    private TextView yourScoreText;
+    private TextView yourScoreText, lead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class ScoreActivity extends AppCompatActivity {
         scoresRecyclerView = findViewById(R.id.scoresRecyclerView);
         yourScoreText = findViewById(R.id.yourScoreText);
         Button playAgainButton = findViewById(R.id.playAgainButton);
+        TextView textView = findViewById(R.id.lead);
+        textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         // Setup RecyclerView
         scoresRecyclerView.setLayoutManager(new LinearLayoutManager(this));

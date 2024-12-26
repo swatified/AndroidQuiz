@@ -389,7 +389,7 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         long totalTime = System.currentTimeMillis() - startTime;
-        Intent intent = new Intent(QuizActivity.this, ScoreActivity.class);
+        Intent intent = new Intent(QuizActivity.this, LoadActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("currentScore", score);
         intent.putExtra("totalTime", totalTime);
