@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInClient googleSignInClient;
     ShapeableImageView imageView;
     TextView name, mail, instructionText;
-    MaterialButton startQuiz, signOut;
+    MaterialButton startQuiz, signOut, leaderboardButton;
     FirebaseFirestore db;
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -80,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
         startQuiz.setVisibility(View.GONE);
         instructionText = findViewById(R.id.instructionText);
         db = FirebaseFirestore.getInstance();
+        leaderboardButton = findViewById(R.id.leaderboardButton);
+        leaderboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LoadActivity.class);
+                intent.putExtra("static", "leaderboard");
+                startActivity(intent);
+            }
+        });
 
         startQuiz.setOnClickListener(new View.OnClickListener() {
             @Override

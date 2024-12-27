@@ -65,7 +65,19 @@ public class ScoreModel {
 
     //getter setter for display name
     public String getDisplayName() {
-        return displayName;
+        if (displayName != null && !displayName.trim().isEmpty()) {
+            return displayName;
+        }
+
+        // If no displayName, get complete local part of email
+        if (userEmail != null && !userEmail.trim().isEmpty()) {
+            String[] parts = userEmail.split("@");
+            if (parts.length > 0) {
+                return parts[0].toLowerCase();
+            }
+        }
+
+        return "---"; // Fallback if neither displayName nor email is available
     }
 
     public void setDisplayName(String displayName) {

@@ -35,9 +35,17 @@ public class LoadActivity extends AppCompatActivity {
                 if (currentProgress < 100) {
                     handler.postDelayed(this, 100);
                 } else {
-                    Intent scoreIntent = new Intent(LoadActivity.this, ScoreActivity.class);
-                    scoreIntent.putExtras(getIntent().getExtras());
-                    startActivity(scoreIntent);
+                    String destination = getIntent().getStringExtra("static");
+                    Intent intent;
+
+                    if ("leaderboard".equals(destination)) {
+                        intent = new Intent(LoadActivity.this, LeaderboardActivity.class);
+                    } else {
+                        intent = new Intent(LoadActivity.this, ScoreActivity.class);
+                        intent.putExtras(getIntent().getExtras());
+                    }
+
+                    startActivity(intent);
                     finish();
                 }
             }
