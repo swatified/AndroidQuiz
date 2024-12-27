@@ -34,7 +34,7 @@ public class ScoreActivity extends AppCompatActivity {
         // Initialize views
         scoresRecyclerView = findViewById(R.id.scoresRecyclerView);
         yourScoreText = findViewById(R.id.yourScoreText);
-        Button playAgainButton = findViewById(R.id.playAgainButton);
+        Button backButton = findViewById(R.id.backButton);
         TextView textView = findViewById(R.id.lead);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
@@ -53,8 +53,8 @@ public class ScoreActivity extends AppCompatActivity {
         // Load scores
         loadScores();
 
-        playAgainButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ScoreActivity.this, QuizActivity.class);
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ScoreActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });

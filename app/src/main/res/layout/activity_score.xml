@@ -34,10 +34,10 @@
         android:layout_weight="1"/>
 
     <Button
-        android:id="@+id/playAgainButton"
+        android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Play Again"
+        android:text="Go back to Signin"
         android:textColor="@color/white"
         style="@style/GreenButton"
         android:layout_marginTop="16dp"/>
