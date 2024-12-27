@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     GoogleSignInClient googleSignInClient;
     ShapeableImageView imageView;
-    TextView name, mail;
+    TextView name, mail, instructionText;
     MaterialButton startQuiz, signOut;
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                                 name.setText(auth.getCurrentUser().getDisplayName());
                                 mail.setText(auth.getCurrentUser().getEmail());
                                 startQuiz.setVisibility(View.VISIBLE);
+                                instructionText.setVisibility(View.GONE);
                                 Toast.makeText(MainActivity.this, "Signed in successfully!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(MainActivity.this, "Failed to sign in: " + task.getException(), Toast.LENGTH_SHORT).show();
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mail = findViewById(R.id.mailTV);
         startQuiz = findViewById(R.id.startQuiz);
         startQuiz.setVisibility(View.GONE);
+        instructionText = findViewById(R.id.instructionText);
 
         startQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                instructionText.setVisibility(View.VISIBLE);
                 FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
                     @Override
                     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
