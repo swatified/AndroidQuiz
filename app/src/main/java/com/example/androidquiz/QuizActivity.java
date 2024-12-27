@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -51,6 +52,9 @@ public class QuizActivity extends AppCompatActivity {
     private long startTime = 0;
     private CountDownTimer timer;
 
+    private ProgressBar questionProgressBar;
+    private TextView progressText;
+
     // Question class to structure our quiz questions
     private static class Question {
         String question;
@@ -74,6 +78,9 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        // Initialize questions
+        initializeQuestions();
+
         // Initialize views
         initializeViews();
 
@@ -84,8 +91,6 @@ public class QuizActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         scoresRef = firebaseDatabase.getReference("scores");
 
-        // Initialize questions
-        initializeQuestions();
 
         startTime = System.currentTimeMillis();
         setupTimer();
@@ -104,6 +109,12 @@ public class QuizActivity extends AppCompatActivity {
         option4 = findViewById(R.id.option4);
         submitButton = findViewById(R.id.submitButton);
         scoreText = findViewById(R.id.scoreText);
+        questionProgressBar = findViewById(R.id.questionProgressBar);
+        progressText = findViewById(R.id.progressText);
+
+        // Set up progress bar
+        questionProgressBar.setMax(questions.size());
+        questionProgressBar.setProgress(1);
     }
 
     private void initializeQuestions() {
@@ -267,6 +278,10 @@ public class QuizActivity extends AppCompatActivity {
             option4.setText(currentQuestion.options.get(3));
 
             scoreText.setText(String.format("Score: %d/%d", score, questions.size()));
+            // Update progressbar and progressText
+            questionProgressBar.setProgress(currentQuestionIndex + 1);
+            progressText.setText(String.format("Question %d/%d",
+                    currentQuestionIndex + 1, questions.size()));
         } else {
             finishQuiz();
         }

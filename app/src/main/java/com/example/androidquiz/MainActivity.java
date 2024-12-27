@@ -30,6 +30,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ShapeableImageView imageView;
     TextView name, mail, instructionText;
     MaterialButton startQuiz, signOut;
+    FirebaseFirestore db;
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -77,15 +79,14 @@ public class MainActivity extends AppCompatActivity {
         startQuiz = findViewById(R.id.startQuiz);
         startQuiz.setVisibility(View.GONE);
         instructionText = findViewById(R.id.instructionText);
+        db = FirebaseFirestore.getInstance();
 
         startQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (auth.getCurrentUser() != null) {
-                    Intent quizIntent = new Intent(MainActivity.this, QuizActivity.class);
-                    quizIntent.putExtra("userName", auth.getCurrentUser().getDisplayName());
-                    quizIntent.putExtra("userEmail", auth.getCurrentUser().getEmail());
-                    startActivity(quizIntent);
+                    // Check if user has already attempted the quiz
+                    checkPreviousAttempt();
                 } else {
                     Toast.makeText(MainActivity.this, "Please sign in first!", Toast.LENGTH_SHORT).show();
                 }
@@ -137,5 +138,32 @@ public class MainActivity extends AppCompatActivity {
             name.setText(auth.getCurrentUser().getDisplayName());
             mail.setText(auth.getCurrentUser().getEmail());
         }
+    }
+
+    private void checkPreviousAttempt() {
+        String userEmail = auth.getCurrentUser().getEmail();
+        db.collection("quiz_scores")
+                .whereEqualTo("userEmail", userEmail)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().isEmpty()) {
+                            // No previous attempt, allow quiz
+                            Intent quizIntent = new Intent(MainActivity.this, QuizActivity.class);
+                            quizIntent.putExtra("userName", auth.getCurrentUser().getDisplayName());
+                            quizIntent.putExtra("userEmail", auth.getCurrentUser().getEmail());
+                            startActivity(quizIntent);
+                        } else {
+                            // Previous attempt found
+                            Toast.makeText(MainActivity.this,
+                                    "You have already attempted the quiz",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this,
+                                "Error checking previous attempts",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

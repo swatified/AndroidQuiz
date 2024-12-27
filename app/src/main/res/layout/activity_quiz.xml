@@ -14,8 +14,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:textSize="18sp"
+        android:layout_marginBottom="14dp"
         android:textColor="@color/white"
         android:text="Time: 00:00"/>
+
+    <TextView
+        android:id="@+id/progressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="Question 1/10"/>
+
 
     <TextView
         android:id="@+id/questionText"
@@ -70,6 +81,16 @@
         android:text="Submit"
         android:textColor="@color/white"
         style="@style/GreenButton"/>
+
+    <ProgressBar
+        android:id="@+id/questionProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_marginTop="8dp"
+        android:progressDrawable="@drawable/custom_progress"
+        android:minHeight="12dp"
+        android:maxHeight="12dp"/>
 
     <TextView
         android:id="@+id/scoreText"
