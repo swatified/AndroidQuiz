@@ -68,6 +68,12 @@ git clone [repository-url]
 5. Open a Pull Request
 <br/>
 
+## Developer 👩‍💻
+<a href="https://github.com/swatified" target="_blank">
+<img src="https://i.ibb.co/Hrg2YTY/image.png"
+     alt="Swati.png" width="38%" height="auto">
+</a>
+
 ## License 📄
 
 Copyright © 2024 Swati Sharma. All rights reserved.
