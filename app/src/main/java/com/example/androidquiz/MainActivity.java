@@ -84,9 +84,13 @@ public class MainActivity extends AppCompatActivity {
         leaderboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, LoadActivity.class);
-                intent.putExtra("static", "leaderboard");
-                startActivity(intent);
+                if (auth.getCurrentUser() != null) {
+                    Intent intent = new Intent(MainActivity.this, LoadActivity.class);
+                    intent.putExtra("static", "leaderboard");
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Please sign to continue", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
